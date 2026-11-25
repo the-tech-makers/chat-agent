@@ -183,7 +183,22 @@ An issue may move to Done only when:
 - Migrations, observability, error handling and rollback notes are addressed where applicable.
 - Test evidence and deployed environment (if applicable) are recorded.
 
-## 8. Reporting
+
+## 9. Created GitHub issues — M0
+
+The first five M0 implementation issues have been created. They are open and therefore currently in **Backlog**. Update their status through issue activity and the GitHub Project when available.
+
+| Issue | Task | Tests | Status |
+|---|---|---|---|
+| [#1 Initialize pnpm/Turborepo monorepo](https://github.com/the-tech-makers/chat-agent/issues/1) | M0.1 / TECH-001, TECH-002 | CI-001, CFG-001, ARC-001 | Backlog |
+| [#2 Create web, widget and worker shells](https://github.com/the-tech-makers/chat-agent/issues/2) | M0.2 / TECH-001, PROD-004 | CI-001, WID-001 | Backlog |
+| [#3 Add PostgreSQL + pgvector dev environment](https://github.com/the-tech-makers/chat-agent/issues/3) | M0.3 / TECH-003 | DB-001, CI-001 | Backlog |
+| [#4 Add CI and deterministic test harness](https://github.com/the-tech-makers/chat-agent/issues/4) | M0.3 / TECH-004, TECH-006, ROAD-002 | CI-001, CI-002, MOD-001 | Backlog |
+| [#5 Add health checks and setup documentation](https://github.com/the-tech-makers/chat-agent/issues/5) | M0.2–M0.3 / TECH-002, ROAD-001 | CFG-001, CI-001 | Backlog |
+
+The GitHub Project board itself has not been created in this pass because the connected GitHub actions available here support repository issues but do not expose GitHub Projects creation/configuration. The issues are live and can be added to a Project board later.
+
+## 10. Reporting
 
 At each milestone review, report:
 - Tasks: Done / In Progress / Ready / Backlog / Blocked.
