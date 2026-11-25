@@ -75,3 +75,18 @@ Before public launch, obtain review of privacy notice, terms, DPA, subprocessor 
 - Backup expiry and tombstone replay are documented and tested.
 - Provider data handling is disclosed accurately.
 - Export and deletion actions are authorized and auditable.
+
+
+## 10. Detailed retention and regional-processing policy
+
+The [Production Policies and Service-Level Specification](PRODUCTION_POLICIES_AND_SLOS.md) defines the required per-data-class retention model, deletion-job state, tombstone replay, backup-expiry semantics, provider due diligence and residency decision register. Its numeric values are proposals only and must not be treated as approved policy.
+
+Before public production:
+- Approve a retention period and lifecycle clock for every data class.
+- Define deletion completion states and communicate backup expiry accurately.
+- Verify that restore replays tombstones before any restored tenant data becomes accessible.
+- Inventory primary storage, replicas, backups, telemetry, support access and model-provider processing regions.
+- Review provider terms and actual account settings for retention, training, deletion and transfer controls.
+- Publish privacy and subprocessor disclosures that match the verified data flow.
+
+A BYOK key does not remove the platform's obligations for prompts, outputs, traces, logs, context assembly and storage handled by this service.
