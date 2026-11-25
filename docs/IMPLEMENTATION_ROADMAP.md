@@ -17,6 +17,7 @@ Related documents:
 - [Requirements Traceability and Task Register](TRACEABILITY_AND_TASK_REGISTER.md)
 - [Quality Assurance and Test Strategy](QUALITY_AND_TEST_STRATEGY.md)
 - [Automated Test Catalogue](../tests/cases/catalog.json)
+- [Production Policies and Service-Level Specification](PRODUCTION_POLICIES_AND_SLOS.md)
 
 ## 2. Delivery principles
 
@@ -531,3 +532,22 @@ Before implementing public endpoints, consult the [OpenAPI 3.1 contract](openapi
 The [Database Design Addendum](DATABASE_DESIGN_ADDENDUM.md) specifies durable workflow entities missing from the initial logical schema: invitations, API tokens, identity nonce/replay records, chat sessions, tool approvals/attempts, idempotency, run events, budget reservations, source versions, attachments and deletion tombstones.
 
 The acceptance/security catalogue now contains 72 planned cases. New cases are specifications, not implemented tests. The coding agent must implement and automate the cases appropriate to each milestone; no case should be marked passed without recorded execution evidence.
+
+
+## 12. Production policy and service-level gates
+
+The policy specification is the source of truth for retention, upload/session limits, rate limits and budget reservations, availability commitments, backup/DR targets, data residency/provider due diligence, pricing and overage behavior. Proposed numeric values are planning candidates only; they are not approved defaults or customer promises.
+
+Before public production:
+- [ ] Approve POL-001 through POL-010 in [Production Policies and Service-Level Specification](PRODUCTION_POLICIES_AND_SLOS.md).
+- [ ] Implement policy versioning, precedence, validation and audit history.
+- [ ] Implement durable retention/deletion jobs and backup tombstone replay.
+- [ ] Enforce server-side upload limits, quarantine/scanning and parser safeguards.
+- [ ] Enforce widget token expiry, refresh, origin binding, replay protection and revocation.
+- [ ] Implement atomic rate limits, concurrency ceilings and budget reservation/reconciliation.
+- [ ] Approve and test actual RPO/RTO; complete a restore drill.
+- [ ] Complete provider data-processing due diligence and approve supported regions.
+- [ ] Approve pricing, entitlement and overage behavior before paid launch.
+- [ ] Keep the product preview/best-effort and avoid public SLA claims until formally approved.
+
+These are release gates in M7, not a reason to block M0–M6 implementation. Build configuration and interfaces so policy values are not hardcoded.
