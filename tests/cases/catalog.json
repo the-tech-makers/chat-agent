@@ -1854,6 +1854,356 @@
       "tags": [
         "p1"
       ]
+    },
+    {
+      "id": "PRIV-001",
+      "priority": "P0",
+      "level": [
+        "operational"
+      ],
+      "traceability": [
+        "POL-001"
+      ],
+      "title": "Class-specific retention expiry is enforced",
+      "preconditions": [
+        "Use isolated synthetic test data and policy fixtures; never use production customer data."
+      ],
+      "steps": [
+        "Create records in each configured retention class with timestamps on either side of its expiry boundary.",
+        "Inspect the response, persisted state and audit evidence."
+      ],
+      "expected_result": "The retention worker deletes or anonymizes only expired eligible records and records its outcome.",
+      "automation_target": "Operational test harness",
+      "status": "planned",
+      "tags": [
+        "p0",
+        "policy"
+      ]
+    },
+    {
+      "id": "PRIV-002",
+      "priority": "P0",
+      "level": [
+        "security"
+      ],
+      "traceability": [
+        "POL-001"
+      ],
+      "title": "Deletion jobs are idempotent and retryable",
+      "preconditions": [
+        "Use isolated synthetic test data and policy fixtures; never use production customer data."
+      ],
+      "steps": [
+        "Submit the same deletion request repeatedly and inject failures between storage, vector and cache cleanup steps.",
+        "Inspect the response, persisted state and audit evidence."
+      ],
+      "expected_result": "One durable deletion job is observed; retries complete remaining steps without duplicate side effects or data resurrection.",
+      "automation_target": "Automated test harness",
+      "status": "planned",
+      "tags": [
+        "p0",
+        "policy"
+      ]
+    },
+    {
+      "id": "PRIV-003",
+      "priority": "P0",
+      "level": [
+        "operational"
+      ],
+      "traceability": [
+        "POL-001"
+      ],
+      "title": "Backup restore replays deletion tombstones",
+      "preconditions": [
+        "Use isolated synthetic test data and policy fixtures; never use production customer data."
+      ],
+      "steps": [
+        "Restore a backup containing a resource that was deleted after the backup was taken.",
+        "Inspect the response, persisted state and audit evidence."
+      ],
+      "expected_result": "Tombstones are replayed before access is enabled and deleted tenant data is not reintroduced.",
+      "automation_target": "Operational test harness",
+      "status": "planned",
+      "tags": [
+        "p0",
+        "policy"
+      ]
+    },
+    {
+      "id": "KNOW-006",
+      "priority": "P0",
+      "level": [
+        "security"
+      ],
+      "traceability": [
+        "POL-002"
+      ],
+      "title": "Upload validation rejects malicious and oversized content",
+      "preconditions": [
+        "Use isolated synthetic test data and policy fixtures; never use production customer data."
+      ],
+      "steps": [
+        "Submit spoofed MIME types, mismatched extensions, oversized files, parser timeouts and archive expansion attacks.",
+        "Inspect the response, persisted state and audit evidence."
+      ],
+      "expected_result": "Server-side limits reject unsafe inputs and quarantined content is never parsed or indexed.",
+      "automation_target": "Automated test harness",
+      "status": "planned",
+      "tags": [
+        "p0",
+        "policy"
+      ]
+    },
+    {
+      "id": "WID-004",
+      "priority": "P0",
+      "level": [
+        "security"
+      ],
+      "traceability": [
+        "POL-003"
+      ],
+      "title": "Widget session expiry and refresh require reauthorization",
+      "preconditions": [
+        "Use isolated synthetic test data and policy fixtures; never use production customer data."
+      ],
+      "steps": [
+        "Use expired, idle-expired, revoked and refreshed sessions against an existing conversation.",
+        "Inspect the response, persisted state and audit evidence."
+      ],
+      "expected_result": "Expired or revoked tokens fail; refresh revalidates origin and identity; conversation access is reauthorized.",
+      "automation_target": "Automated test harness",
+      "status": "planned",
+      "tags": [
+        "p0",
+        "policy"
+      ]
+    },
+    {
+      "id": "SEC-012",
+      "priority": "P0",
+      "level": [
+        "security"
+      ],
+      "traceability": [
+        "POL-003"
+      ],
+      "title": "Widget nonce replay and origin mismatch are rejected",
+      "preconditions": [
+        "Use isolated synthetic test data and policy fixtures; never use production customer data."
+      ],
+      "steps": [
+        "Replay an identity/session nonce and send bridge messages from an unapproved origin or source window.",
+        "Inspect the response, persisted state and audit evidence."
+      ],
+      "expected_result": "Replay, origin mismatch, wrong source and malformed message are rejected without leaking session details.",
+      "automation_target": "Automated test harness",
+      "status": "planned",
+      "tags": [
+        "p0",
+        "policy"
+      ]
+    },
+    {
+      "id": "API-008",
+      "priority": "P0",
+      "level": [
+        "integration"
+      ],
+      "traceability": [
+        "POL-004"
+      ],
+      "title": "Rate limits are atomic across application instances",
+      "preconditions": [
+        "Use isolated synthetic test data and policy fixtures; never use production customer data."
+      ],
+      "steps": [
+        "Send requests concurrently through multiple API instances for one configured limit bucket.",
+        "Inspect the response, persisted state and audit evidence."
+      ],
+      "expected_result": "The aggregate limit is enforced atomically and excess requests receive a stable 429 response with Retry-After where applicable.",
+      "automation_target": "Automated test harness",
+      "status": "planned",
+      "tags": [
+        "p0",
+        "policy"
+      ]
+    },
+    {
+      "id": "PRIV-004",
+      "priority": "P0",
+      "level": [
+        "operational"
+      ],
+      "traceability": [
+        "POL-006"
+      ],
+      "title": "Workspace restore does not revive revoked credentials",
+      "preconditions": [
+        "Use isolated synthetic test data and policy fixtures; never use production customer data."
+      ],
+      "steps": [
+        "Restore backup data containing previously revoked API tokens, sessions and connector grants.",
+        "Inspect the response, persisted state and audit evidence."
+      ],
+      "expected_result": "Revocation/tombstone state is applied before restored services accept traffic.",
+      "automation_target": "Operational test harness",
+      "status": "planned",
+      "tags": [
+        "p0",
+        "policy"
+      ]
+    },
+    {
+      "id": "PRIV-005",
+      "priority": "P0",
+      "level": [
+        "security"
+      ],
+      "traceability": [
+        "POL-007"
+      ],
+      "title": "Residency inventory covers all data processing locations",
+      "preconditions": [
+        "Use isolated synthetic test data and policy fixtures; never use production customer data."
+      ],
+      "steps": [
+        "Inspect storage, backups, telemetry, support access and provider routing configuration.",
+        "Inspect the response, persisted state and audit evidence."
+      ],
+      "expected_result": "Every processing location is inventoried and unsupported region routes are blocked by policy.",
+      "automation_target": "Automated test harness",
+      "status": "planned",
+      "tags": [
+        "p0",
+        "policy"
+      ]
+    },
+    {
+      "id": "MOD-010",
+      "priority": "P0",
+      "level": [
+        "security"
+      ],
+      "traceability": [
+        "POL-008"
+      ],
+      "title": "Unapproved model providers cannot receive customer context",
+      "preconditions": [
+        "Use isolated synthetic test data and policy fixtures; never use production customer data."
+      ],
+      "steps": [
+        "Attempt routing to a provider that is disabled or lacks required processing approval.",
+        "Inspect the response, persisted state and audit evidence."
+      ],
+      "expected_result": "The gateway blocks the request before transmission and records a sanitized policy decision.",
+      "automation_target": "Automated test harness",
+      "status": "planned",
+      "tags": [
+        "p0",
+        "policy"
+      ]
+    },
+    {
+      "id": "BILL-001",
+      "priority": "P0",
+      "level": [
+        "integration"
+      ],
+      "traceability": [
+        "POL-009"
+      ],
+      "title": "Usage ledger is immutable and price-book versioned",
+      "preconditions": [
+        "Use isolated synthetic test data and policy fixtures; never use production customer data."
+      ],
+      "steps": [
+        "Record provider usage and later change the current model price book.",
+        "Inspect the response, persisted state and audit evidence."
+      ],
+      "expected_result": "Historical usage retains original provider-reported quantities and price-book version.",
+      "automation_target": "Automated test harness",
+      "status": "planned",
+      "tags": [
+        "p0",
+        "policy"
+      ]
+    },
+    {
+      "id": "BILL-002",
+      "priority": "P0",
+      "level": [
+        "integration"
+      ],
+      "traceability": [
+        "POL-009"
+      ],
+      "title": "Usage event retries are deduplicated",
+      "preconditions": [
+        "Use isolated synthetic test data and policy fixtures; never use production customer data."
+      ],
+      "steps": [
+        "Deliver the same provider usage event or billing webhook multiple times.",
+        "Inspect the response, persisted state and audit evidence."
+      ],
+      "expected_result": "The ledger contains one logical charge/usage event with an auditable deduplication outcome.",
+      "automation_target": "Automated test harness",
+      "status": "planned",
+      "tags": [
+        "p0",
+        "policy"
+      ]
+    },
+    {
+      "id": "BILL-003",
+      "priority": "P0",
+      "level": [
+        "security"
+      ],
+      "traceability": [
+        "POL-010"
+      ],
+      "title": "Hard-stop overage prevents unapproved spend",
+      "preconditions": [
+        "Use isolated synthetic test data and policy fixtures; never use production customer data."
+      ],
+      "steps": [
+        "Exhaust a workspace budget and attempt a new billable run; then apply an expiring admin grant.",
+        "Inspect the response, persisted state and audit evidence."
+      ],
+      "expected_result": "New billable work is rejected before provider invocation; only scoped, audited, unexpired grants permit additional usage.",
+      "automation_target": "Automated test harness",
+      "status": "planned",
+      "tags": [
+        "p0",
+        "policy"
+      ]
+    },
+    {
+      "id": "MOD-011",
+      "priority": "P0",
+      "level": [
+        "security"
+      ],
+      "traceability": [
+        "POL-010"
+      ],
+      "title": "BYOK exhaustion never silently switches billing source",
+      "preconditions": [
+        "Use isolated synthetic test data and policy fixtures; never use production customer data."
+      ],
+      "steps": [
+        "Cause a BYOK provider failure or workspace budget exhaustion while platform-managed credits exist.",
+        "Inspect the response, persisted state and audit evidence."
+      ],
+      "expected_result": "The failure is surfaced and no platform credential, provider or billing source is silently substituted.",
+      "automation_target": "Automated test harness",
+      "status": "planned",
+      "tags": [
+        "p0",
+        "policy"
+      ]
     }
   ]
 }
