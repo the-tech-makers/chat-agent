@@ -18,7 +18,9 @@
     {
       "id": "CI-001",
       "priority": "P0",
-      "level": "integration",
+      "level": [
+        "integration"
+      ],
       "traceability": [
         "TECH-001",
         "TECH-004"
@@ -42,7 +44,9 @@
     {
       "id": "CI-002",
       "priority": "P0",
-      "level": "operational",
+      "level": [
+        "operational"
+      ],
       "traceability": [
         "ROAD-002"
       ],
@@ -65,7 +69,9 @@
     {
       "id": "CFG-001",
       "priority": "P1",
-      "level": "unit",
+      "level": [
+        "unit"
+      ],
       "traceability": [
         "TECH-002"
       ],
@@ -88,7 +94,9 @@
     {
       "id": "ARC-001",
       "priority": "P1",
-      "level": "unit",
+      "level": [
+        "unit"
+      ],
       "traceability": [
         "ARC-001",
         "TECH-001"
@@ -112,7 +120,9 @@
     {
       "id": "DB-001",
       "priority": "P0",
-      "level": "integration",
+      "level": [
+        "integration"
+      ],
       "traceability": [
         "DB-001",
         "TECH-003"
@@ -136,7 +146,9 @@
     {
       "id": "DB-002",
       "priority": "P0",
-      "level": "integration",
+      "level": [
+        "integration"
+      ],
       "traceability": [
         "DB-002"
       ],
@@ -159,7 +171,9 @@
     {
       "id": "DB-003",
       "priority": "P1",
-      "level": "integration",
+      "level": [
+        "integration"
+      ],
       "traceability": [
         "DB-005"
       ],
@@ -182,7 +196,9 @@
     {
       "id": "TEN-001",
       "priority": "P0",
-      "level": "security",
+      "level": [
+        "security"
+      ],
       "traceability": [
         "DB-002",
         "PROD-001"
@@ -206,7 +222,9 @@
     {
       "id": "TEN-002",
       "priority": "P0",
-      "level": "security",
+      "level": [
+        "security"
+      ],
       "traceability": [
         "DB-003"
       ],
@@ -229,7 +247,9 @@
     {
       "id": "TEN-003",
       "priority": "P0",
-      "level": "security",
+      "level": [
+        "security"
+      ],
       "traceability": [
         "DB-003",
         "PROD-008"
@@ -253,7 +273,9 @@
     {
       "id": "IAM-001",
       "priority": "P0",
-      "level": "integration",
+      "level": [
+        "integration"
+      ],
       "traceability": [
         "IAM-001"
       ],
@@ -276,7 +298,9 @@
     {
       "id": "IAM-002",
       "priority": "P0",
-      "level": "security",
+      "level": [
+        "security"
+      ],
       "traceability": [
         "IAM-001"
       ],
@@ -299,7 +323,9 @@
     {
       "id": "IAM-003",
       "priority": "P0",
-      "level": "security",
+      "level": [
+        "security"
+      ],
       "traceability": [
         "IAM-002"
       ],
@@ -322,7 +348,9 @@
     {
       "id": "IAM-004",
       "priority": "P0",
-      "level": "security",
+      "level": [
+        "security"
+      ],
       "traceability": [
         "IAM-003"
       ],
@@ -345,7 +373,9 @@
     {
       "id": "IAM-005",
       "priority": "P0",
-      "level": "security",
+      "level": [
+        "security"
+      ],
       "traceability": [
         "IAM-004"
       ],
@@ -368,7 +398,9 @@
     {
       "id": "IAM-006",
       "priority": "P0",
-      "level": "security",
+      "level": [
+        "security"
+      ],
       "traceability": [
         "IAM-005"
       ],
@@ -391,7 +423,9 @@
     {
       "id": "MOD-001",
       "priority": "P0",
-      "level": "unit",
+      "level": [
+        "unit"
+      ],
       "traceability": [
         "ARC-003",
         "TECH-004"
@@ -415,7 +449,9 @@
     {
       "id": "MOD-002",
       "priority": "P0",
-      "level": "unit",
+      "level": [
+        "unit"
+      ],
       "traceability": [
         "ARC-004"
       ],
@@ -438,7 +474,9 @@
     {
       "id": "MOD-003",
       "priority": "P0",
-      "level": "integration",
+      "level": [
+        "integration"
+      ],
       "traceability": [
         "ARC-004"
       ],
@@ -461,7 +499,9 @@
     {
       "id": "MOD-004",
       "priority": "P0",
-      "level": "security",
+      "level": [
+        "security"
+      ],
       "traceability": [
         "ARC-005"
       ],
@@ -484,7 +524,9 @@
     {
       "id": "MOD-005",
       "priority": "P0",
-      "level": "security",
+      "level": [
+        "security"
+      ],
       "traceability": [
         "ARC-005"
       ],
@@ -507,7 +549,9 @@
     {
       "id": "MOD-006",
       "priority": "P1",
-      "level": "security",
+      "level": [
+        "security"
+      ],
       "traceability": [
         "ARC-005"
       ],
@@ -530,7 +574,9 @@
     {
       "id": "AGT-001",
       "priority": "P0",
-      "level": "integration",
+      "level": [
+        "integration"
+      ],
       "traceability": [
         "PROD-002",
         "ARC-002"
@@ -554,7 +600,9 @@
     {
       "id": "AGT-002",
       "priority": "P1",
-      "level": "integration",
+      "level": [
+        "integration"
+      ],
       "traceability": [
         "PROD-002"
       ],
@@ -577,7 +625,9 @@
     {
       "id": "AGT-003",
       "priority": "P0",
-      "level": "integration",
+      "level": [
+        "integration"
+      ],
       "traceability": [
         "ARC-002"
       ],
@@ -600,7 +650,9 @@
     {
       "id": "CHAT-001",
       "priority": "P0",
-      "level": "e2e",
+      "level": [
+        "e2e"
+      ],
       "traceability": [
         "PROD-003"
       ],
@@ -623,7 +675,9 @@
     {
       "id": "CHAT-002",
       "priority": "P0",
-      "level": "e2e",
+      "level": [
+        "e2e"
+      ],
       "traceability": [
         "PROD-003",
         "IAM-003"
@@ -647,7 +701,9 @@
     {
       "id": "WID-001",
       "priority": "P0",
-      "level": "security",
+      "level": [
+        "security"
+      ],
       "traceability": [
         "PROD-004",
         "SEC-001"
@@ -671,7 +727,9 @@
     {
       "id": "MCP-001",
       "priority": "P0",
-      "level": "integration",
+      "level": [
+        "integration"
+      ],
       "traceability": [
         "INT-001"
       ],
@@ -694,7 +752,9 @@
     {
       "id": "MCP-002",
       "priority": "P0",
-      "level": "integration",
+      "level": [
+        "integration"
+      ],
       "traceability": [
         "INT-003"
       ],
@@ -717,7 +777,9 @@
     {
       "id": "MCP-003",
       "priority": "P0",
-      "level": "security",
+      "level": [
+        "security"
+      ],
       "traceability": [
         "INT-004",
         "PROD-005"
@@ -741,7 +803,9 @@
     {
       "id": "MCP-004",
       "priority": "P0",
-      "level": "security",
+      "level": [
+        "security"
+      ],
       "traceability": [
         "INT-005"
       ],
@@ -764,7 +828,9 @@
     {
       "id": "MCP-005",
       "priority": "P0",
-      "level": "security",
+      "level": [
+        "security"
+      ],
       "traceability": [
         "INT-006",
         "SEC-006"
@@ -788,7 +854,9 @@
     {
       "id": "MCP-006",
       "priority": "P1",
-      "level": "integration",
+      "level": [
+        "integration"
+      ],
       "traceability": [
         "INT-007"
       ],
@@ -811,7 +879,9 @@
     {
       "id": "SEC-001",
       "priority": "P0",
-      "level": "security",
+      "level": [
+        "security"
+      ],
       "traceability": [
         "SEC-001",
         "PROD-004"
@@ -835,7 +905,9 @@
     {
       "id": "SEC-002",
       "priority": "P0",
-      "level": "security",
+      "level": [
+        "security"
+      ],
       "traceability": [
         "INT-002",
         "SEC-002"
@@ -859,7 +931,9 @@
     {
       "id": "SEC-003",
       "priority": "P0",
-      "level": "security",
+      "level": [
+        "security"
+      ],
       "traceability": [
         "INT-002",
         "SEC-002"
@@ -883,7 +957,9 @@
     {
       "id": "SEC-004",
       "priority": "P0",
-      "level": "security",
+      "level": [
+        "security"
+      ],
       "traceability": [
         "SEC-003"
       ],
@@ -906,7 +982,9 @@
     {
       "id": "SEC-005",
       "priority": "P0",
-      "level": "security",
+      "level": [
+        "security"
+      ],
       "traceability": [
         "SEC-005"
       ],
@@ -929,7 +1007,9 @@
     {
       "id": "SEC-006",
       "priority": "P0",
-      "level": "security",
+      "level": [
+        "security"
+      ],
       "traceability": [
         "INT-005",
         "SEC-006"
@@ -953,7 +1033,9 @@
     {
       "id": "SEC-008",
       "priority": "P0",
-      "level": "security",
+      "level": [
+        "security"
+      ],
       "traceability": [
         "DB-004",
         "SEC-004"
@@ -977,7 +1059,9 @@
     {
       "id": "SEC-009",
       "priority": "P1",
-      "level": "security",
+      "level": [
+        "security"
+      ],
       "traceability": [
         "SEC-004"
       ],
@@ -1000,7 +1084,9 @@
     {
       "id": "SEC-010",
       "priority": "P1",
-      "level": "security",
+      "level": [
+        "security"
+      ],
       "traceability": [
         "ARC-007",
         "IAM-006"
@@ -1024,7 +1110,9 @@
     {
       "id": "KNOW-001",
       "priority": "P0",
-      "level": "integration",
+      "level": [
+        "integration"
+      ],
       "traceability": [
         "PROD-006"
       ],
@@ -1047,7 +1135,9 @@
     {
       "id": "KNOW-002",
       "priority": "P0",
-      "level": "security",
+      "level": [
+        "security"
+      ],
       "traceability": [
         "PROD-006"
       ],
@@ -1070,7 +1160,9 @@
     {
       "id": "CTX-001",
       "priority": "P1",
-      "level": "integration",
+      "level": [
+        "integration"
+      ],
       "traceability": [
         "PROD-007"
       ],
@@ -1093,7 +1185,9 @@
     {
       "id": "JOB-001",
       "priority": "P1",
-      "level": "integration",
+      "level": [
+        "integration"
+      ],
       "traceability": [
         "ARC-006",
         "TECH-005"
@@ -1117,7 +1211,9 @@
     {
       "id": "OBS-001",
       "priority": "P1",
-      "level": "operational",
+      "level": [
+        "operational"
+      ],
       "traceability": [
         "ARC-007",
         "PROD-008",
@@ -1142,7 +1238,9 @@
     {
       "id": "OPS-002",
       "priority": "P1",
-      "level": "operational",
+      "level": [
+        "operational"
+      ],
       "traceability": [
         "DB-006",
         "SEC-008"
@@ -1166,7 +1264,9 @@
     {
       "id": "OPS-003",
       "priority": "P1",
-      "level": "operational",
+      "level": [
+        "operational"
+      ],
       "traceability": [
         "SEC-007",
         "TECH-006"
@@ -1190,7 +1290,9 @@
     {
       "id": "OPS-004",
       "priority": "P1",
-      "level": "operational",
+      "level": [
+        "operational"
+      ],
       "traceability": [
         "SEC-008"
       ],
@@ -1213,7 +1315,9 @@
     {
       "id": "API-001",
       "priority": "P0",
-      "level": "integration",
+      "level": [
+        "integration"
+      ],
       "traceability": [
         "PROD-001"
       ],
