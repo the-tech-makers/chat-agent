@@ -55,6 +55,7 @@ The MVP is intended for cloud deployment. Actual compute, storage, scaling and d
 - [Integration Architecture](docs/INTEGRATION_ARCHITECTURE.md)
 - [Identity & Authorization Architecture](docs/IDENTITY_AND_AUTHORIZATION.md)
 - [Security Architecture & Threat Model](docs/SECURITY_AND_THREAT_MODEL.md)
+- [Technology Stack & Project Structure](docs/TECH_STACK_AND_PROJECT_STRUCTURE.md)
 
 ## Credits
 Built by [The Tech Makers](https://github.com/the-tech-makers) and contributors.
