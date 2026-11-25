@@ -80,3 +80,19 @@ Record each approved choice in the relevant specification and an ADR if it chang
 The previously open policy decisions are now specified in [Production Policies and Service-Level Specification](PRODUCTION_POLICIES_AND_SLOS.md), including ten decision IDs POL-001–POL-010. This closes the documentation gap at the requirements level, but does **not** mean the business decisions are approved or that implementation is complete.
 
 AUD-016 remains an explicit production gate: numeric retention, upload/session limits, rate limits, backup retention, RPO/RTO, residency, provider commitments and pricing/overage settings require owner approval. Proposed example values must remain configuration proposals and must not be copied into hardcoded constants or public promises.
+
+
+## 9. Implementation-readiness review follow-through
+
+The detailed implementation-readiness review is recorded in [Implementation Readiness Review & Coding-Agent Handoff](IMPLEMENTATION_READINESS_HANDOFF.md). It identifies nine additional contract-closure findings:
+- HND-001: customer identity subject mapping.
+- HND-002: canonical immutable MCP tool-version model.
+- HND-003: role/permission schema reconciliation.
+- HND-004: remaining API routes absent from the initial OpenAPI slice.
+- HND-005: generic versioned policy representation.
+- HND-006: immutable price-book linkage for usage.
+- HND-007: stale test catalogue count.
+- HND-008: widget installation cardinality and ownership.
+- HND-009: formal OpenAPI/catalogue CI validation.
+
+The review confirms that M0 can begin now. These findings must be resolved at the milestone boundaries specified in the handoff; they do not all block repository setup. No business-policy proposal is considered approved by this review.
