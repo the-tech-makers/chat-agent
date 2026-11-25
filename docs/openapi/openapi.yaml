@@ -271,6 +271,9 @@ paths:
         schema: { type: string, minLength: 1, maxLength: 128 }
     get:
       tags: [Chat]
+      security:
+        - widgetSessionBearer: []
+        - dashboardBearer: []
       operationId: listMessages
       parameters:
         - name: cursor
@@ -288,6 +291,9 @@ paths:
                 $ref: '#/components/schemas/MessageCollection'
     post:
       tags: [Chat]
+      security:
+        - widgetSessionBearer: []
+        - dashboardBearer: []
       operationId: sendMessage
       summary: Submit a message. Streaming is selected using Accept: text/event-stream.
       parameters:
