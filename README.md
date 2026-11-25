@@ -72,6 +72,7 @@ The MVP is intended for cloud deployment. Actual compute, storage, scaling and d
 - [Architecture Decision Records](docs/ARCHITECTURE_DECISIONS.md)
 - [Glossary](docs/GLOSSARY.md)
 - [Contract Alignment Audit](docs/CONTRACT_ALIGNMENT_AUDIT.md)
+- [Implementation Readiness Review & Coding-Agent Handoff](docs/IMPLEMENTATION_READINESS_HANDOFF.md)
 - [Production Policies & Service-Level Specification](docs/PRODUCTION_POLICIES_AND_SLOS.md)
 - [Database Design Addendum](docs/DATABASE_DESIGN_ADDENDUM.md)
 - [OpenAPI 3.1 Contract](docs/openapi/openapi.yaml)
