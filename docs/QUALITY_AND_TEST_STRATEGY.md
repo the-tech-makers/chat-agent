@@ -179,9 +179,9 @@ pnpm build
 If an individual package exposes a narrower test command, document it in that package's README. CI and local commands should use the same scripts.
 
 
-## 12. Expanded catalogue and contract validation
+## 13. Expanded catalogue and contract validation
 
-The machine-readable catalogue at `tests/cases/catalog.json` contains 72 planned test cases. New coverage includes:
+The machine-readable catalogue at `tests/cases/catalog.json` contains 86 planned test cases. New coverage includes:
 - API idempotency, tenant concealment and error redaction.
 - Runtime terminal-state recovery and untrusted retrieval boundaries.
 - Model credential resolution, strict BYOK behavior and capability validation.
