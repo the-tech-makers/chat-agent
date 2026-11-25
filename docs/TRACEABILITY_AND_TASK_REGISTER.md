@@ -281,3 +281,10 @@ Source: [Production Policies and Service-Level Specification](PRODUCTION_POLICIE
 - Backup restoration must replay deletion tombstones before tenant data is exposed.
 - A widget session expiring does not itself authorize continued access to a conversation.
 - Public SLA, residency, compliance, retention, and pricing claims require explicit approval and supporting evidence.
+
+
+## 9. Implementation readiness handoff
+
+The cross-document review, nine HND findings, exact implementation order, dependency map and unresolved decision timing are maintained in [Implementation Readiness Review & Coding-Agent Handoff](IMPLEMENTATION_READINESS_HANDOFF.md).
+
+Treat HND-001 through HND-009 as tracked contract-closure items. They are not all M0 blockers: each finding identifies the milestone before which it must be resolved. The current machine-readable catalogue contains 86 unique planned test cases; planned status is not evidence of execution or passing.
