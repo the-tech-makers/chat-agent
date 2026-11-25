@@ -71,6 +71,9 @@ The MVP is intended for cloud deployment. Actual compute, storage, scaling and d
 - [Data Lifecycle & Privacy](docs/DATA_LIFECYCLE_AND_PRIVACY.md)
 - [Architecture Decision Records](docs/ARCHITECTURE_DECISIONS.md)
 - [Glossary](docs/GLOSSARY.md)
+- [Contract Alignment Audit](docs/CONTRACT_ALIGNMENT_AUDIT.md)
+- [Database Design Addendum](docs/DATABASE_DESIGN_ADDENDUM.md)
+- [OpenAPI 3.1 Contract](docs/openapi/openapi.yaml)
 
 ## Credits
 Built by [The Tech Makers](https://github.com/the-tech-makers) and contributors.
