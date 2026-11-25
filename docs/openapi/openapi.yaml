@@ -169,6 +169,8 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
   /workspaces/{workspace_id}/widget-sessions:
+    parameters:
+      - $ref: '#/components/parameters/WorkspaceId'
     post:
       tags: [Widget]
       operationId: createWidgetSession
