@@ -60,6 +60,17 @@ The MVP is intended for cloud deployment. Actual compute, storage, scaling and d
 - [Requirements Traceability & Task Register](docs/TRACEABILITY_AND_TASK_REGISTER.md)
 - [Quality Assurance & Test Strategy](docs/QUALITY_AND_TEST_STRATEGY.md)
 - [Automated Test Catalogue (JSON)](tests/cases/catalog.json)
+- [API Specification](docs/API_SPECIFICATION.md)
+- [Agent Runtime Specification](docs/AGENT_RUNTIME_SPECIFICATION.md)
+- [Model Gateway Specification](docs/MODEL_GATEWAY_SPECIFICATION.md)
+- [Widget & SDK Specification](docs/WIDGET_AND_SDK_SPECIFICATION.md)
+- [Knowledge & Retrieval Specification](docs/KNOWLEDGE_AND_RETRIEVAL_SPECIFICATION.md)
+- [Admin & Workspace Operations](docs/ADMIN_AND_WORKSPACE_OPERATIONS.md)
+- [Deployment & Operations Runbook](docs/DEPLOYMENT_AND_OPERATIONS_RUNBOOK.md)
+- [Configuration Reference](docs/CONFIGURATION_REFERENCE.md)
+- [Data Lifecycle & Privacy](docs/DATA_LIFECYCLE_AND_PRIVACY.md)
+- [Architecture Decision Records](docs/ARCHITECTURE_DECISIONS.md)
+- [Glossary](docs/GLOSSARY.md)
 
 ## Credits
 Built by [The Tech Makers](https://github.com/the-tech-makers) and contributors.
