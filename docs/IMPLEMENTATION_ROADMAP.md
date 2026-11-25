@@ -522,3 +522,12 @@ Before implementing a milestone, consult its detailed contract documents:
 - [Architecture decision records](ARCHITECTURE_DECISIONS.md) and [glossary](GLOSSARY.md) — settled decisions and shared terminology.
 
 These documents are design contracts, not evidence that features have been implemented. If implementation discovers a necessary deviation, propose an ADR and update the affected contract, database design, task register and test catalogue together before merging the change.
+
+
+## 20. Contract audit and machine-readable API
+
+Before implementing public endpoints, consult the [OpenAPI 3.1 contract](openapi/openapi.yaml) and [Contract Alignment Audit](CONTRACT_ALIGNMENT_AUDIT.md). The OpenAPI file is the initial core-route slice, not a complete representation of every route in the API catalogue.
+
+The [Database Design Addendum](DATABASE_DESIGN_ADDENDUM.md) specifies durable workflow entities missing from the initial logical schema: invitations, API tokens, identity nonce/replay records, chat sessions, tool approvals/attempts, idempotency, run events, budget reservations, source versions, attachments and deletion tombstones.
+
+The acceptance/security catalogue now contains 72 planned cases. New cases are specifications, not implemented tests. The coding agent must implement and automate the cases appropriate to each milestone; no case should be marked passed without recorded execution evidence.
