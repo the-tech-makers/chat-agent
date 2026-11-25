@@ -73,3 +73,10 @@ Record each approved choice in the relevant specification and an ADR if it chang
 - Every public route has authorization and tenant-isolation test coverage.
 - Every durable workflow has retry, idempotency and terminal-state semantics.
 - No production numeric policy is silently inferred from a development default.
+
+
+## 8. Policy follow-through
+
+The previously open policy decisions are now specified in [Production Policies and Service-Level Specification](PRODUCTION_POLICIES_AND_SLOS.md), including ten decision IDs POL-001–POL-010. This closes the documentation gap at the requirements level, but does **not** mean the business decisions are approved or that implementation is complete.
+
+AUD-016 remains an explicit production gate: numeric retention, upload/session limits, rate limits, backup retention, RPO/RTO, residency, provider commitments and pricing/overage settings require owner approval. Proposed example values must remain configuration proposals and must not be copied into hardcoded constants or public promises.
