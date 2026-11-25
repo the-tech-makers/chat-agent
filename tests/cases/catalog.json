@@ -1,0 +1,1237 @@
+{
+  "schema_version": "1.0.0",
+  "catalogue": "Chat Agent automated acceptance and security tests",
+  "conventions": {
+    "id": "Stable unique identifier; do not reuse retired IDs",
+    "status": "planned | automated | active | blocked | retired",
+    "priority": "P0 | P1 | P2 | P3",
+    "levels": [
+      "unit",
+      "integration",
+      "e2e",
+      "security",
+      "operational"
+    ],
+    "execution": "Framework-neutral acceptance procedures. Implement with Vitest, Playwright, PostgreSQL integration tests, fake providers and fake MCP servers."
+  },
+  "test_cases": [
+    {
+      "id": "CI-001",
+      "priority": "P0",
+      "level": "integration",
+      "traceability": [
+        "TECH-001",
+        "TECH-004"
+      ],
+      "title": "Clean checkout pipeline",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "A clean checkout installs from lockfile, lint/typechecks, tests and builds without secrets or network calls to inference providers.",
+      "automation_target": "pnpm + CI",
+      "status": "planned",
+      "tags": [
+        "p0"
+      ]
+    },
+    {
+      "id": "CI-002",
+      "priority": "P0",
+      "level": "operational",
+      "traceability": [
+        "ROAD-002"
+      ],
+      "title": "Release gate blocks failing checks",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Force one required test to fail; verify the PR/release gate is red and cannot be treated as passed.",
+      "automation_target": "GitHub Actions",
+      "status": "planned",
+      "tags": [
+        "p0"
+      ]
+    },
+    {
+      "id": "CFG-001",
+      "priority": "P1",
+      "level": "unit",
+      "traceability": [
+        "TECH-002"
+      ],
+      "title": "Invalid environment rejected",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Start with a missing or malformed required environment variable; startup fails with a safe actionable error and does not print secret values.",
+      "automation_target": "Vitest",
+      "status": "planned",
+      "tags": [
+        "p1"
+      ]
+    },
+    {
+      "id": "ARC-001",
+      "priority": "P1",
+      "level": "unit",
+      "traceability": [
+        "ARC-001",
+        "TECH-001"
+      ],
+      "title": "Package dependency boundaries",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Run dependency-boundary checks; imports violating the approved package direction fail CI.",
+      "automation_target": "dependency-cruiser or equivalent",
+      "status": "planned",
+      "tags": [
+        "p1"
+      ]
+    },
+    {
+      "id": "DB-001",
+      "priority": "P0",
+      "level": "integration",
+      "traceability": [
+        "DB-001",
+        "TECH-003"
+      ],
+      "title": "Fresh database migration",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Create an empty PostgreSQL database with pgvector; apply all migrations; verify expected tables, extensions and indexes exist.",
+      "automation_target": "Vitest + PostgreSQL",
+      "status": "planned",
+      "tags": [
+        "p0"
+      ]
+    },
+    {
+      "id": "DB-002",
+      "priority": "P0",
+      "level": "integration",
+      "traceability": [
+        "DB-002"
+      ],
+      "title": "Database integrity constraints",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Attempt duplicate membership, invalid foreign keys and mismatched workspace/organization references; each invalid write is rejected.",
+      "automation_target": "Vitest + PostgreSQL",
+      "status": "planned",
+      "tags": [
+        "p0"
+      ]
+    },
+    {
+      "id": "DB-003",
+      "priority": "P1",
+      "level": "integration",
+      "traceability": [
+        "DB-005"
+      ],
+      "title": "Critical query plan",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Run representative tenant-scoped list and retrieval queries against seeded data; capture plans and confirm intended indexes are eligible/used at agreed scale.",
+      "automation_target": "PostgreSQL EXPLAIN",
+      "status": "planned",
+      "tags": [
+        "p1"
+      ]
+    },
+    {
+      "id": "TEN-001",
+      "priority": "P0",
+      "level": "security",
+      "traceability": [
+        "DB-002",
+        "PROD-001"
+      ],
+      "title": "Tenant relationship integrity",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Create Alpha and Beta; attempt to associate a Beta resource with Alpha workspace; database/service rejects the relationship.",
+      "automation_target": "Vitest + PostgreSQL",
+      "status": "planned",
+      "tags": [
+        "p0"
+      ]
+    },
+    {
+      "id": "TEN-002",
+      "priority": "P0",
+      "level": "security",
+      "traceability": [
+        "DB-003"
+      ],
+      "title": "RLS denies cross-tenant read",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Set tenant context to Alpha; query Beta rows by known IDs; no Beta row is returned.",
+      "automation_target": "Vitest + PostgreSQL",
+      "status": "planned",
+      "tags": [
+        "p0"
+      ]
+    },
+    {
+      "id": "TEN-003",
+      "priority": "P0",
+      "level": "security",
+      "traceability": [
+        "DB-003",
+        "PROD-008"
+      ],
+      "title": "RLS denies cross-tenant write and missing context",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Attempt insert/update/delete against another tenant and query with no tenant context; all protected operations are denied.",
+      "automation_target": "Vitest + PostgreSQL",
+      "status": "planned",
+      "tags": [
+        "p0"
+      ]
+    },
+    {
+      "id": "IAM-001",
+      "priority": "P0",
+      "level": "integration",
+      "traceability": [
+        "IAM-001"
+      ],
+      "title": "Workspace role permissions",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Exercise each workspace role against owner/admin/developer/analyst/viewer operations; only explicitly allowed actions succeed.",
+      "automation_target": "Vitest",
+      "status": "planned",
+      "tags": [
+        "p0"
+      ]
+    },
+    {
+      "id": "IAM-002",
+      "priority": "P0",
+      "level": "security",
+      "traceability": [
+        "IAM-001"
+      ],
+      "title": "Unauthenticated management access denied",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Call protected workspace management endpoints without a valid platform session; request is denied and no data is disclosed.",
+      "automation_target": "API integration",
+      "status": "planned",
+      "tags": [
+        "p0"
+      ]
+    },
+    {
+      "id": "IAM-003",
+      "priority": "P0",
+      "level": "security",
+      "traceability": [
+        "IAM-002"
+      ],
+      "title": "Guest identity has least privilege",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Create a guest chat; attempt to access private user data and authenticated-only tools; all protected access is denied.",
+      "automation_target": "API integration + Playwright",
+      "status": "planned",
+      "tags": [
+        "p0"
+      ]
+    },
+    {
+      "id": "IAM-004",
+      "priority": "P0",
+      "level": "security",
+      "traceability": [
+        "IAM-003"
+      ],
+      "title": "Signed identity handoff validation",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Valid signed, unexpired identity token is accepted; tampered signature, wrong audience/workspace, expired token and unsupported algorithm are rejected.",
+      "automation_target": "Vitest",
+      "status": "planned",
+      "tags": [
+        "p0"
+      ]
+    },
+    {
+      "id": "IAM-005",
+      "priority": "P0",
+      "level": "security",
+      "traceability": [
+        "IAM-004"
+      ],
+      "title": "Client cannot choose actor or tenant",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Submit forged user ID, role, workspace ID and organization ID in request body/headers; server uses only verified claims and server-side mapping.",
+      "automation_target": "API integration",
+      "status": "planned",
+      "tags": [
+        "p0"
+      ]
+    },
+    {
+      "id": "IAM-006",
+      "priority": "P0",
+      "level": "security",
+      "traceability": [
+        "IAM-005"
+      ],
+      "title": "Authorization rechecked at tool execution",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Grant access, create chat, revoke access, then invoke protected tool; execution is denied after revocation.",
+      "automation_target": "Integration + fake MCP",
+      "status": "planned",
+      "tags": [
+        "p0"
+      ]
+    },
+    {
+      "id": "MOD-001",
+      "priority": "P0",
+      "level": "unit",
+      "traceability": [
+        "ARC-003",
+        "TECH-004"
+      ],
+      "title": "Provider adapter contract",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Run common model request/stream/tool-call/error contract against fake provider; adapter normalizes results and errors consistently.",
+      "automation_target": "Vitest",
+      "status": "planned",
+      "tags": [
+        "p0"
+      ]
+    },
+    {
+      "id": "MOD-002",
+      "priority": "P0",
+      "level": "unit",
+      "traceability": [
+        "ARC-004"
+      ],
+      "title": "Model route resolution precedence",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Given workspace explicit preference, admin workspace override and platform default, verify documented precedence and deterministic selected route.",
+      "automation_target": "Vitest",
+      "status": "planned",
+      "tags": [
+        "p0"
+      ]
+    },
+    {
+      "id": "MOD-003",
+      "priority": "P0",
+      "level": "integration",
+      "traceability": [
+        "ARC-004"
+      ],
+      "title": "Admin override scope",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Apply override for workspace Alpha; Alpha resolves to override while Beta remains unchanged; unauthorized workspace owner cannot alter platform override.",
+      "automation_target": "Vitest",
+      "status": "planned",
+      "tags": [
+        "p0"
+      ]
+    },
+    {
+      "id": "MOD-004",
+      "priority": "P0",
+      "level": "security",
+      "traceability": [
+        "ARC-005"
+      ],
+      "title": "BYOK failure never silently falls back",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Configure BYOK credential and force provider auth/quota failure; request returns a clear BYOK error and no platform credential/provider is attempted.",
+      "automation_target": "Vitest + fake providers",
+      "status": "planned",
+      "tags": [
+        "p0"
+      ]
+    },
+    {
+      "id": "MOD-005",
+      "priority": "P0",
+      "level": "security",
+      "traceability": [
+        "ARC-005"
+      ],
+      "title": "Fallback requires explicit admin policy",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "With fallback disabled, provider failure stops request; with explicit enabled policy, only configured eligible fallback route may be attempted and event is audited.",
+      "automation_target": "Vitest",
+      "status": "planned",
+      "tags": [
+        "p0"
+      ]
+    },
+    {
+      "id": "MOD-006",
+      "priority": "P1",
+      "level": "security",
+      "traceability": [
+        "ARC-005"
+      ],
+      "title": "Credential isolation and redaction",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Verify API responses, browser payloads, logs, traces and error objects never include raw provider key or secret reference material.",
+      "automation_target": "Vitest",
+      "status": "planned",
+      "tags": [
+        "p1"
+      ]
+    },
+    {
+      "id": "AGT-001",
+      "priority": "P0",
+      "level": "integration",
+      "traceability": [
+        "PROD-002",
+        "ARC-002"
+      ],
+      "title": "Runtime loads published configuration",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Publish agent version N; runtime loads N for new sessions and does not load an unpublished draft.",
+      "automation_target": "Vitest + PostgreSQL",
+      "status": "planned",
+      "tags": [
+        "p0"
+      ]
+    },
+    {
+      "id": "AGT-002",
+      "priority": "P1",
+      "level": "integration",
+      "traceability": [
+        "PROD-002"
+      ],
+      "title": "Agent rollback",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Publish versions N and N+1; roll back to N; new sessions use N and audit records preserve the change.",
+      "automation_target": "Vitest + PostgreSQL",
+      "status": "planned",
+      "tags": [
+        "p1"
+      ]
+    },
+    {
+      "id": "AGT-003",
+      "priority": "P0",
+      "level": "integration",
+      "traceability": [
+        "ARC-002"
+      ],
+      "title": "Bounded model-tool loop",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Fake model requests permitted tool then returns final answer; runtime enforces configured maximum turns/tool calls and terminates safely.",
+      "automation_target": "Vitest",
+      "status": "planned",
+      "tags": [
+        "p0"
+      ]
+    },
+    {
+      "id": "CHAT-001",
+      "priority": "P0",
+      "level": "e2e",
+      "traceability": [
+        "PROD-003"
+      ],
+      "title": "Guest chat journey",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Open allowed-origin widget as guest, start chat, send message, receive streamed response and see conversation persist.",
+      "automation_target": "Playwright",
+      "status": "planned",
+      "tags": [
+        "p0"
+      ]
+    },
+    {
+      "id": "CHAT-002",
+      "priority": "P0",
+      "level": "e2e",
+      "traceability": [
+        "PROD-003",
+        "IAM-003"
+      ],
+      "title": "Authenticated chat journey",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Open widget with valid customer identity handoff; chat is associated with verified actor and cannot access another actor's session.",
+      "automation_target": "Playwright",
+      "status": "planned",
+      "tags": [
+        "p0"
+      ]
+    },
+    {
+      "id": "WID-001",
+      "priority": "P0",
+      "level": "security",
+      "traceability": [
+        "PROD-004",
+        "SEC-001"
+      ],
+      "title": "Widget origin allowlist",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Load widget from approved origin successfully; attempt initialization from unapproved origin and verify it cannot create privileged session or invoke parent bridge.",
+      "automation_target": "Playwright",
+      "status": "planned",
+      "tags": [
+        "p0"
+      ]
+    },
+    {
+      "id": "MCP-001",
+      "priority": "P0",
+      "level": "integration",
+      "traceability": [
+        "INT-001"
+      ],
+      "title": "MCP connection validation",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Connect to a valid fake MCP server; verify handshake and capability negotiation; unreachable/malformed server returns bounded safe failure.",
+      "automation_target": "Vitest + fake MCP",
+      "status": "planned",
+      "tags": [
+        "p0"
+      ]
+    },
+    {
+      "id": "MCP-002",
+      "priority": "P0",
+      "level": "integration",
+      "traceability": [
+        "INT-003"
+      ],
+      "title": "MCP discovery normalization",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Discover tools with optional fields and varied JSON schemas; normalize deterministically; malformed schema is rejected/quarantined.",
+      "automation_target": "Vitest + fake MCP",
+      "status": "planned",
+      "tags": [
+        "p0"
+      ]
+    },
+    {
+      "id": "MCP-003",
+      "priority": "P0",
+      "level": "security",
+      "traceability": [
+        "INT-004",
+        "PROD-005"
+      ],
+      "title": "Discovered tools disabled by default",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Discover a new tool; attempt invocation before workspace review/enablement; broker denies execution.",
+      "automation_target": "Integration + fake MCP",
+      "status": "planned",
+      "tags": [
+        "p0"
+      ]
+    },
+    {
+      "id": "MCP-004",
+      "priority": "P0",
+      "level": "security",
+      "traceability": [
+        "INT-005"
+      ],
+      "title": "Every tool invocation passes broker policy",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Attempt direct connector invocation bypassing broker and a normal approved call; bypass is impossible and approved call is authorized/audited.",
+      "automation_target": "Integration",
+      "status": "planned",
+      "tags": [
+        "p0"
+      ]
+    },
+    {
+      "id": "MCP-005",
+      "priority": "P0",
+      "level": "security",
+      "traceability": [
+        "INT-006",
+        "SEC-006"
+      ],
+      "title": "Write action requires policy and approval",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Attempt write/destructive action without permission and without approval; both are denied. Supply valid required approval; action proceeds once and is audited.",
+      "automation_target": "Integration + fake MCP",
+      "status": "planned",
+      "tags": [
+        "p0"
+      ]
+    },
+    {
+      "id": "MCP-006",
+      "priority": "P1",
+      "level": "integration",
+      "traceability": [
+        "INT-007"
+      ],
+      "title": "MCP timeout and failure handling",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Fake server delays, closes connection and returns protocol error; calls time out within bound, errors are normalized and retries do not duplicate non-idempotent actions.",
+      "automation_target": "Vitest + fake MCP",
+      "status": "planned",
+      "tags": [
+        "p1"
+      ]
+    },
+    {
+      "id": "SEC-001",
+      "priority": "P0",
+      "level": "security",
+      "traceability": [
+        "SEC-001",
+        "PROD-004"
+      ],
+      "title": "Origin and browser messaging validation",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Reject unknown origin, malformed origin and untrusted postMessage sender; accept only configured exact origins and expected message schema.",
+      "automation_target": "Playwright",
+      "status": "planned",
+      "tags": [
+        "p0"
+      ]
+    },
+    {
+      "id": "SEC-002",
+      "priority": "P0",
+      "level": "security",
+      "traceability": [
+        "INT-002",
+        "SEC-002"
+      ],
+      "title": "SSRF destination blocking",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Attempt loopback, RFC1918/private, link-local, IPv6 local, cloud metadata and reserved IP destinations; all are blocked before connection.",
+      "automation_target": "Vitest + controlled DNS",
+      "status": "planned",
+      "tags": [
+        "p0"
+      ]
+    },
+    {
+      "id": "SEC-003",
+      "priority": "P0",
+      "level": "security",
+      "traceability": [
+        "INT-002",
+        "SEC-002"
+      ],
+      "title": "SSRF redirect and DNS rebinding defense",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Public endpoint redirects to private IP or DNS answer changes between validation and connection; request is blocked at connect time.",
+      "automation_target": "Integration + controlled HTTP/DNS",
+      "status": "planned",
+      "tags": [
+        "p0"
+      ]
+    },
+    {
+      "id": "SEC-004",
+      "priority": "P0",
+      "level": "security",
+      "traceability": [
+        "SEC-003"
+      ],
+      "title": "Rate and payload limits",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Exceed configured per-workspace/origin/actor request rate and body size; server returns controlled 429/413 and does not enqueue work.",
+      "automation_target": "API integration",
+      "status": "planned",
+      "tags": [
+        "p0"
+      ]
+    },
+    {
+      "id": "SEC-005",
+      "priority": "P0",
+      "level": "security",
+      "traceability": [
+        "SEC-005"
+      ],
+      "title": "Prompt injection cannot change policy",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Place hostile instructions in user message, retrieved document and tool output; runtime treats them as untrusted data and still enforces system policy/authorization.",
+      "automation_target": "Vitest adversarial suite",
+      "status": "planned",
+      "tags": [
+        "p0"
+      ]
+    },
+    {
+      "id": "SEC-006",
+      "priority": "P0",
+      "level": "security",
+      "traceability": [
+        "INT-005",
+        "SEC-006"
+      ],
+      "title": "Tool risk classification and deny by default",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Unknown/unclassified tool is denied; read tool follows read policy; write/destructive tools require stronger permission and approval.",
+      "automation_target": "Vitest",
+      "status": "planned",
+      "tags": [
+        "p0"
+      ]
+    },
+    {
+      "id": "SEC-008",
+      "priority": "P0",
+      "level": "security",
+      "traceability": [
+        "DB-004",
+        "SEC-004"
+      ],
+      "title": "Secret storage and API exposure",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Persist credential through vault adapter; database contains reference/metadata only; API never returns secret; decryption requires authorized server context.",
+      "automation_target": "Integration",
+      "status": "planned",
+      "tags": [
+        "p0"
+      ]
+    },
+    {
+      "id": "SEC-009",
+      "priority": "P1",
+      "level": "security",
+      "traceability": [
+        "SEC-004"
+      ],
+      "title": "Secret redaction in telemetry",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Inject fake key/token into provider errors and request metadata; logs, traces and error reports redact it.",
+      "automation_target": "Vitest",
+      "status": "planned",
+      "tags": [
+        "p1"
+      ]
+    },
+    {
+      "id": "SEC-010",
+      "priority": "P1",
+      "level": "security",
+      "traceability": [
+        "ARC-007",
+        "IAM-006"
+      ],
+      "title": "Audit log integrity and minimization",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Verify security decisions create tenant-scoped audit events with actor/action/outcome/correlation ID but omit raw secrets and unnecessary personal data.",
+      "automation_target": "Integration",
+      "status": "planned",
+      "tags": [
+        "p1"
+      ]
+    },
+    {
+      "id": "KNOW-001",
+      "priority": "P0",
+      "level": "integration",
+      "traceability": [
+        "PROD-006"
+      ],
+      "title": "Knowledge ingestion validation",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Upload supported file; verify size/type checks, extraction, chunking, embedding and indexing; malformed or oversized file is rejected safely.",
+      "automation_target": "Vitest + PostgreSQL",
+      "status": "planned",
+      "tags": [
+        "p0"
+      ]
+    },
+    {
+      "id": "KNOW-002",
+      "priority": "P0",
+      "level": "security",
+      "traceability": [
+        "PROD-006"
+      ],
+      "title": "Knowledge retrieval tenant isolation and citations",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Alpha retrieves its own relevant document with source metadata; Beta document and unauthorized source are never returned to Alpha.",
+      "automation_target": "Integration + PostgreSQL",
+      "status": "planned",
+      "tags": [
+        "p0"
+      ]
+    },
+    {
+      "id": "CTX-001",
+      "priority": "P1",
+      "level": "integration",
+      "traceability": [
+        "PROD-007"
+      ],
+      "title": "Context draft and publish lifecycle",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Edit draft context; runtime continues using published context until explicit publish; rollback restores prior version.",
+      "automation_target": "Vitest + PostgreSQL",
+      "status": "planned",
+      "tags": [
+        "p1"
+      ]
+    },
+    {
+      "id": "JOB-001",
+      "priority": "P1",
+      "level": "integration",
+      "traceability": [
+        "ARC-006",
+        "TECH-005"
+      ],
+      "title": "Worker retry and idempotency",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Deliver same job twice and simulate transient failure; side effect occurs once, retry is bounded and final state is observable.",
+      "automation_target": "Vitest + queue adapter",
+      "status": "planned",
+      "tags": [
+        "p1"
+      ]
+    },
+    {
+      "id": "OBS-001",
+      "priority": "P1",
+      "level": "operational",
+      "traceability": [
+        "ARC-007",
+        "PROD-008",
+        "ROAD-003"
+      ],
+      "title": "Request correlation and usage reporting",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Trace one chat through API, runtime, provider and tool broker; usage and timings are attributable to workspace without sensitive payload logging.",
+      "automation_target": "Integration",
+      "status": "planned",
+      "tags": [
+        "p1"
+      ]
+    },
+    {
+      "id": "OPS-002",
+      "priority": "P1",
+      "level": "operational",
+      "traceability": [
+        "DB-006",
+        "SEC-008"
+      ],
+      "title": "Backup restore drill",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Restore a recent encrypted backup into isolated environment; verify schema, tenant records and application read checks; record RPO/RTO evidence.",
+      "automation_target": "Runbook + staging",
+      "status": "planned",
+      "tags": [
+        "p1"
+      ]
+    },
+    {
+      "id": "OPS-003",
+      "priority": "P1",
+      "level": "operational",
+      "traceability": [
+        "SEC-007",
+        "TECH-006"
+      ],
+      "title": "Dependency and image security gate",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Introduce a known vulnerable test dependency/image in a controlled scan fixture; CI flags it according to configured severity policy.",
+      "automation_target": "CI scanner",
+      "status": "planned",
+      "tags": [
+        "p1"
+      ]
+    },
+    {
+      "id": "OPS-004",
+      "priority": "P1",
+      "level": "operational",
+      "traceability": [
+        "SEC-008"
+      ],
+      "title": "Credential revocation drill",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Revoke/rotate a test provider or MCP credential; old credential stops working, new credential works and action is audited.",
+      "automation_target": "Staging",
+      "status": "planned",
+      "tags": [
+        "p1"
+      ]
+    },
+    {
+      "id": "API-001",
+      "priority": "P0",
+      "level": "integration",
+      "traceability": [
+        "PROD-001"
+      ],
+      "title": "Workspace API lifecycle",
+      "preconditions": [
+        "Use isolated synthetic test data; never use production customer data."
+      ],
+      "steps": [
+        "Arrange the stated test condition using fixtures or controlled test services.",
+        "Execute the behavior under test.",
+        "Inspect the response and relevant persisted/audited state."
+      ],
+      "expected_result": "Create workspace, read it, update allowed fields and archive it; unauthorized actor and duplicate slug attempts are rejected.",
+      "automation_target": "API integration",
+      "status": "planned",
+      "tags": [
+        "p0"
+      ]
+    }
+  ]
+}
