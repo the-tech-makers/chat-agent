@@ -85,3 +85,17 @@ Track infrastructure and model cost by workspace with tenant-safe aggregation. E
 - Worker shutdown drains or safely requeues work.
 - Tenant usage and cost are attributable without exposing content.
 - Production secrets are isolated from CI, preview and developer machines.
+
+
+## 11. Production policy alignment
+
+Use [Production Policies and Service-Level Specification](PRODUCTION_POLICIES_AND_SLOS.md) as the authoritative policy decision register. In particular:
+
+- Do not publish uptime, support response, RPO or RTO commitments until approved and measured.
+- Configure per-data-class retention and make deletion jobs/tombstone replay part of restore procedures.
+- Enforce upload, session, request, concurrency and budget limits in shared server-side infrastructure.
+- Keep provider allowlists and regional-processing restrictions centrally configurable.
+- Keep paid overages disabled until a price book, billing lifecycle and explicit customer consent/contract are approved.
+- Store policy version and effective configuration with operational/audit evidence, but never log secret values or raw sensitive content.
+
+Production readiness evidence must include the approved policy matrix, recovery drill report, provider review records, monitoring ownership, and tested emergency kill switches.
