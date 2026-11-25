@@ -57,6 +57,9 @@ The MVP is intended for cloud deployment. Actual compute, storage, scaling and d
 - [Security Architecture & Threat Model](docs/SECURITY_AND_THREAT_MODEL.md)
 - [Technology Stack & Project Structure](docs/TECH_STACK_AND_PROJECT_STRUCTURE.md)
 - [Implementation Roadmap](docs/IMPLEMENTATION_ROADMAP.md)
+- [Requirements Traceability & Task Register](docs/TRACEABILITY_AND_TASK_REGISTER.md)
+- [Quality Assurance & Test Strategy](docs/QUALITY_AND_TEST_STRATEGY.md)
+- [Automated Test Catalogue (JSON)](tests/cases/catalog.json)
 
 ## Credits
 Built by [The Tech Makers](https://github.com/the-tech-makers) and contributors.
