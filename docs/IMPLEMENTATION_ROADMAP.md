@@ -18,6 +18,7 @@ Related documents:
 - [Quality Assurance and Test Strategy](QUALITY_AND_TEST_STRATEGY.md)
 - [Automated Test Catalogue](../tests/cases/catalog.json)
 - [Production Policies and Service-Level Specification](PRODUCTION_POLICIES_AND_SLOS.md)
+- [Implementation Readiness Review & Coding-Agent Handoff](IMPLEMENTATION_READINESS_HANDOFF.md)
 
 ## 2. Delivery principles
 
