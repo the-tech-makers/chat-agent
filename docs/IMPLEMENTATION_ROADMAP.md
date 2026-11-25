@@ -14,6 +14,9 @@ Related documents:
 - [Identity and Authorization](IDENTITY_AND_AUTHORIZATION.md)
 - [Security Architecture and Threat Model](SECURITY_AND_THREAT_MODEL.md)
 - [Technology Stack and Project Structure](TECH_STACK_AND_PROJECT_STRUCTURE.md)
+- [Requirements Traceability and Task Register](TRACEABILITY_AND_TASK_REGISTER.md)
+- [Quality Assurance and Test Strategy](QUALITY_AND_TEST_STRATEGY.md)
+- [Automated Test Catalogue](../tests/cases/catalog.json)
 
 ## 2. Delivery principles
 
@@ -484,3 +487,10 @@ Start with this small, reviewable batch rather than generating the whole applica
 6. [ ] Add a health endpoint and local setup instructions.
 
 Do not implement provider keys, live MCP execution, or customer private-data access in this first batch. Establish the build and test foundation first.
+
+
+## 18. Task tracking and test traceability
+
+Use the [Requirements Traceability and Task Register](TRACEABILITY_AND_TASK_REGISTER.md) as the index mapping every scope/architecture document to implementation tasks, acceptance evidence and stable test IDs. Track live task status in the GitHub Project **Chat Agent — Delivery** using the defined workflow. The GitHub Project is the live status source; this roadmap and register define scope and dependencies.
+
+Use the [Quality Assurance and Automated Test Strategy](QUALITY_AND_TEST_STRATEGY.md) for test levels, CI gates, coverage policy, test data and milestone exit criteria. The machine-readable [test catalogue](../tests/cases/catalog.json) currently defines automatable acceptance/security scenarios. Implement tests incrementally with the milestone that owns each feature; the catalogue entries are planned until implemented and passing. A task is Done only after its required tests pass and evidence is linked.
