@@ -209,3 +209,32 @@ At each milestone review, report:
 - Milestone exit criteria and decision.
 
 A task marked Done with missing test evidence is a process defect; correct the status rather than treating the missing evidence as optional.
+
+
+## 11. Additional detailed specification coverage
+
+The following documents refine the original scope and architecture. Their implementation work is allocated to the milestones below; these rows are requirement traceability, not claims of completed code.
+
+| Document | Task ID | Priority | Implementation task | Acceptance evidence | Test coverage |
+|---|---|---:|---|---|---|
+| [API specification](API_SPECIFICATION.md) | API-001 | P0 | Implement versioned API contracts, auth scopes, error envelopes and pagination | Contract tests cover every public route class and cross-tenant denial | API-001, AUTH-001, TEN-001 |
+| [Agent runtime specification](AGENT_RUNTIME_SPECIFICATION.md) | AGT-001 | P0 | Implement durable request lifecycle, context assembly, bounded orchestration and terminal states | Failure injection proves exactly one terminal state and no unauthorized context | AGT-001, AGT-002, TEN-001 |
+| [Model gateway specification](MODEL_GATEWAY_SPECIFICATION.md) | MOD-002 | P0 | Implement provider adapter contract, deterministic route resolution and credential boundaries | BYOK failure tests prove no silent provider/key/model switch | MOD-002, MOD-003, SEC-002 |
+| [Widget and SDK specification](WID-002) | WID-002 | P1 | Implement iframe bootstrap, origin checks, session exchange and versioned bridge | Browser tests reject wrong origin, expired token and privileged message | WID-002, AUTH-002 |
+| [Knowledge and retrieval specification](KNW-001) | KNW-001 | P1 | Implement versioned ingestion, ACL-filtered retrieval, citations and deletion | Retrieval and deletion tests cover tenant/source ACL boundaries | KNW-001, TEN-002 |
+| [Admin and workspace operations](ADM-001) | ADM-001 | P1 | Implement permission catalog, owner safeguards, support access and workspace lifecycle | Authorization matrix and audit tests pass | ADM-001, SEC-003 |
+| [Deployment and operations runbook](OPS-004) | OPS-004 | P1 | Implement release, backup/restore, incident and operational readiness procedures | Restore drill and rollback evidence recorded | OPS-004, OBS-001 |
+| [Configuration reference](CFG-002) | CFG-002 | P0 | Implement typed per-process configuration schemas and secret references | Startup validation and redaction tests pass | CFG-002, SEC-001 |
+| [Data lifecycle and privacy](PRV-001) | PRV-001 | P1 | Implement retention, export, deletion tombstones and workspace offboarding | Deletion verification covers primary, derived and backup replay paths | PRV-001, SEC-004 |
+| [ADR and glossary](DOC-001) | DOC-001 | P1 | Maintain decision records and consistent domain terminology | Material architecture changes include reviewed ADR and doc updates | DOC-001 |
+
+### Milestone ownership
+
+- M1: API auth conventions, configuration validation, tenant boundaries and core permission schema.
+- M2: model gateway and credential-source enforcement.
+- M3–M4: runtime lifecycle, streaming contract, widget protocol and identity exchange.
+- M5: tool broker contracts and integration authorization.
+- M6: knowledge ingestion, retrieval ACLs and deletion.
+- M7: admin operations, privacy/offboarding, production runbooks and operational evidence.
+
+Stable test IDs above are planning identifiers; add corresponding cases to `tests/cases/catalog.json` before implementation begins. Do not mark these tasks Done until the contract and test evidence are implemented and reviewed.
