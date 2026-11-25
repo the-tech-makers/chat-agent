@@ -1,0 +1,630 @@
+openapi: 3.1.0
+info:
+  title: Universal Chat Agent API
+  version: 1.0.0
+  summary: Initial machine-readable contract for core workspace and chat operations.
+  description: |
+    Contract-first MVP slice. Additional route families in API_SPECIFICATION.md
+    must be added here before implementation. All identifiers are opaque strings.
+servers:
+  - url: https://api.example.com/api/v1
+    description: Production placeholder; replace with configured deployment URL.
+tags:
+  - name: Workspaces
+  - name: Agent
+  - name: Widget
+  - name: Identity
+  - name: Chat
+  - name: Models
+security:
+  - dashboardBearer: []
+paths:
+  /workspaces:
+    get:
+      tags: [Workspaces]
+      operationId: listWorkspaces
+      summary: List workspaces available to the authenticated dashboard user.
+      responses:
+        '200':
+          description: Workspace page.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkspaceCollection'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      tags: [Workspaces]
+      operationId: createWorkspace
+      summary: Create a workspace for an eligible account.
+      security:
+        - dashboardBearer: []
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [name, slug]
+              properties:
+                name: { type: string, minLength: 1, maxLength: 120 }
+                slug: { type: string, pattern: '^[a-z0-9][a-z0-9-]{1,61}[a-z0-9]$' }
+      responses:
+        '201':
+          description: Workspace created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkspaceEnvelope'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+  /workspaces/{workspace_id}:
+    parameters:
+      - $ref: '#/components/parameters/WorkspaceId'
+    get:
+      tags: [Workspaces]
+      operationId: getWorkspace
+      summary: Read workspace metadata.
+      responses:
+        '200':
+          description: Workspace.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkspaceEnvelope'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      tags: [Workspaces]
+      operationId: updateWorkspace
+      summary: Update workspace profile and permitted settings.
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              minProperties: 1
+              additionalProperties: false
+              properties:
+                name: { type: string, minLength: 1, maxLength: 120 }
+      responses:
+        '200':
+          description: Updated workspace.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkspaceEnvelope'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /workspaces/{workspace_id}/agent:
+    parameters:
+      - $ref: '#/components/parameters/WorkspaceId'
+    get:
+      tags: [Agent]
+      operationId: getAgent
+      summary: Read universal agent configuration metadata.
+      responses:
+        '200':
+          description: Agent configuration.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentEnvelope'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      tags: [Agent]
+      operationId: updateAgent
+      summary: Update draft agent configuration; publishing is a separate controlled action.
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                name: { type: string, minLength: 1, maxLength: 120 }
+                description: { type: [string, 'null'], maxLength: 2000 }
+                instructions: { type: string, maxLength: 30000 }
+      responses:
+        '200':
+          description: Draft agent updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentEnvelope'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /workspaces/{workspace_id}/widget-config:
+    get:
+      tags: [Widget]
+      operationId: getPublicWidgetConfig
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/WorkspaceId'
+        - name: public_key
+          in: query
+          required: true
+          schema: { type: string, minLength: 8, maxLength: 128 }
+      responses:
+        '200':
+          description: Public-safe configuration only; never includes secrets or internal instructions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WidgetConfigEnvelope'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /workspaces/{workspace_id}/widget-sessions:
+    post:
+      tags: [Widget]
+      operationId: createWidgetSession
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/WorkspaceId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [public_key, origin]
+              properties:
+                public_key: { type: string, minLength: 8, maxLength: 128 }
+                origin: { type: string, format: uri }
+                client_nonce: { type: string, maxLength: 128 }
+      responses:
+        '201':
+          description: Short-lived origin-bound widget session.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WidgetSessionEnvelope'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /workspaces/{workspace_id}/identity/exchange:
+    post:
+      tags: [Identity]
+      operationId: exchangeCustomerIdentity
+      security:
+        - workspaceServerBearer: []
+      parameters:
+        - $ref: '#/components/parameters/WorkspaceId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [assertion]
+              properties:
+                assertion: { type: string, minLength: 20, maxLength: 10000 }
+      responses:
+        '200':
+          description: Scoped user session token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WidgetSessionEnvelope'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          description: Assertion nonce has already been used.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+  /chat/sessions:
+    post:
+      tags: [Chat]
+      operationId: createChatSession
+      security:
+        - widgetSessionBearer: []
+        - dashboardBearer: []
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                locale: { type: string, maxLength: 35 }
+                metadata:
+                  type: object
+                  additionalProperties: true
+                  maxProperties: 20
+      responses:
+        '201':
+          description: Chat session created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatSessionEnvelope'
+  /chat/sessions/{session_id}/messages:
+    parameters:
+      - name: session_id
+        in: path
+        required: true
+        schema: { type: string, minLength: 1, maxLength: 128 }
+    get:
+      tags: [Chat]
+      operationId: listMessages
+      parameters:
+        - name: cursor
+          in: query
+          schema: { type: string }
+        - name: limit
+          in: query
+          schema: { type: integer, minimum: 1, maximum: 100, default: 50 }
+      responses:
+        '200':
+          description: Authorized message page.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageCollection'
+    post:
+      tags: [Chat]
+      operationId: sendMessage
+      summary: Submit a message. Streaming is selected using Accept: text/event-stream.
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+        - name: Accept
+          in: header
+          required: false
+          schema:
+            type: string
+            enum: [application/json, text/event-stream]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [content, client_message_id]
+              properties:
+                content: { type: string, minLength: 1, maxLength: 20000 }
+                client_message_id: { type: string, minLength: 1, maxLength: 128 }
+                attachments:
+                  type: array
+                  maxItems: 10
+                  items: { type: string }
+                stream: { type: boolean, default: true }
+                metadata:
+                  type: object
+                  maxProperties: 20
+                  additionalProperties: true
+      responses:
+        '200':
+          description: Completed message response when JSON is requested.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageEnvelope'
+        '202':
+          description: Accepted asynchronous generation.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunEnvelope'
+        'text/event-stream':
+          description: SSE stream. Events are documented in API_SPECIFICATION.md.
+          headers:
+            Cache-Control:
+              schema: { type: string, example: no-cache }
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /chat/sessions/{session_id}/cancel:
+    post:
+      tags: [Chat]
+      operationId: cancelGeneration
+      parameters:
+        - name: session_id
+          in: path
+          required: true
+          schema: { type: string }
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '202':
+          description: Cancellation accepted.
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /workspaces/{workspace_id}/models:
+    get:
+      tags: [Models]
+      operationId: listAvailableModels
+      parameters:
+        - $ref: '#/components/parameters/WorkspaceId'
+      responses:
+        '200':
+          description: Enabled model catalog, filtered by workspace policy.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelCollection'
+  /workspaces/{workspace_id}/provider-credentials:
+    post:
+      tags: [Models]
+      operationId: createProviderCredential
+      parameters:
+        - $ref: '#/components/parameters/WorkspaceId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [provider_id, label, secret]
+              properties:
+                provider_id: { type: string }
+                label: { type: string, minLength: 1, maxLength: 100 }
+                secret: { type: string, minLength: 8, writeOnly: true }
+      responses:
+        '201':
+          description: Credential metadata; submitted secret is never returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CredentialEnvelope'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+    get:
+      tags: [Models]
+      operationId: listProviderCredentials
+      parameters:
+        - $ref: '#/components/parameters/WorkspaceId'
+      responses:
+        '200':
+          description: Credential metadata only.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CredentialCollection'
+components:
+  securitySchemes:
+    dashboardBearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: SaaS dashboard session token; workspace membership and permissions are still checked.
+    workspaceServerBearer:
+      type: http
+      scheme: bearer
+      description: Workspace server credential with explicit scopes.
+    widgetSessionBearer:
+      type: http
+      scheme: bearer
+      description: Short-lived token restricted to one workspace, agent, origin and session.
+  parameters:
+    WorkspaceId:
+      name: workspace_id
+      in: path
+      required: true
+      schema: { type: string, minLength: 1, maxLength: 128 }
+    IdempotencyKey:
+      name: Idempotency-Key
+      in: header
+      required: false
+      description: Required by policy for retryable create/write operations; scope and retention are defined by the API contract.
+      schema: { type: string, minLength: 8, maxLength: 128 }
+  schemas:
+    Meta:
+      type: object
+      required: [request_id, api_version]
+      properties:
+        request_id: { type: string }
+        api_version: { type: string, const: v1 }
+    Workspace:
+      type: object
+      required: [id, name, slug, status, created_at]
+      properties:
+        id: { type: string }
+        name: { type: string }
+        slug: { type: string }
+        status: { type: string, enum: [trial, active, restricted, suspended, deletion_pending, deleted] }
+        created_at: { type: string, format: date-time }
+    WorkspaceEnvelope:
+      type: object
+      required: [data, meta]
+      properties:
+        data: { $ref: '#/components/schemas/Workspace' }
+        meta: { $ref: '#/components/schemas/Meta' }
+    WorkspaceCollection:
+      type: object
+      required: [data, meta, page]
+      properties:
+        data: { type: array, items: { $ref: '#/components/schemas/Workspace' } }
+        meta: { $ref: '#/components/schemas/Meta' }
+        page:
+          type: object
+          properties:
+            limit: { type: integer }
+            next_cursor: { type: [string, 'null'] }
+    Agent:
+      type: object
+      properties:
+        id: { type: string }
+        name: { type: string }
+        status: { type: string, enum: [draft, published, disabled] }
+        active_version_id: { type: [string, 'null'] }
+        updated_at: { type: string, format: date-time }
+    AgentEnvelope:
+      type: object
+      required: [data, meta]
+      properties:
+        data: { $ref: '#/components/schemas/Agent' }
+        meta: { $ref: '#/components/schemas/Meta' }
+    WidgetConfigEnvelope:
+      type: object
+      required: [data, meta]
+      properties:
+        data:
+          type: object
+          properties:
+            display_name: { type: string }
+            theme: { type: object, additionalProperties: true }
+            launcher: { type: object, additionalProperties: true }
+            locale: { type: string }
+            logo_url: { type: [string, 'null'], format: uri }
+        meta: { $ref: '#/components/schemas/Meta' }
+    WidgetSessionEnvelope:
+      type: object
+      required: [data, meta]
+      properties:
+        data:
+          type: object
+          required: [session_token, expires_at, scope]
+          properties:
+            session_token: { type: string, writeOnly: true }
+            expires_at: { type: string, format: date-time }
+            scope: { type: array, items: { type: string } }
+        meta: { $ref: '#/components/schemas/Meta' }
+    ChatSessionEnvelope:
+      type: object
+      required: [data, meta]
+      properties:
+        data:
+          type: object
+          required: [id, status]
+          properties:
+            id: { type: string }
+            status: { type: string, enum: [active, closed, expired] }
+        meta: { $ref: '#/components/schemas/Meta' }
+    Message:
+      type: object
+      required: [id, role, content, created_at]
+      properties:
+        id: { type: string }
+        role: { type: string, enum: [user, assistant] }
+        content: { type: string }
+        created_at: { type: string, format: date-time }
+        citations: { type: array, items: { type: object, additionalProperties: true } }
+    MessageEnvelope:
+      type: object
+      required: [data, meta]
+      properties:
+        data: { $ref: '#/components/schemas/Message' }
+        meta: { $ref: '#/components/schemas/Meta' }
+    MessageCollection:
+      type: object
+      required: [data, meta, page]
+      properties:
+        data: { type: array, items: { $ref: '#/components/schemas/Message' } }
+        meta: { $ref: '#/components/schemas/Meta' }
+        page: { type: object, properties: { limit: { type: integer }, next_cursor: { type: [string, 'null'] } } }
+    RunEnvelope:
+      type: object
+      required: [data, meta]
+      properties:
+        data:
+          type: object
+          properties:
+            run_id: { type: string }
+            status: { type: string, enum: [queued, running, completed, failed, cancelled, expired] }
+        meta: { $ref: '#/components/schemas/Meta' }
+    ModelCollection:
+      type: object
+      required: [data, meta]
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              provider_id: { type: string }
+              model_id: { type: string }
+              capabilities: { type: object, additionalProperties: true }
+        meta: { $ref: '#/components/schemas/Meta' }
+    Credential:
+      type: object
+      required: [id, provider_id, label, status, created_at]
+      properties:
+        id: { type: string }
+        provider_id: { type: string }
+        label: { type: string }
+        status: { type: string, enum: [pending_validation, active, invalid, revoked] }
+        secret_last_four: { type: [string, 'null'], description: Never return secret value; optional masked metadata only. }
+        created_at: { type: string, format: date-time }
+    CredentialEnvelope:
+      type: object
+      required: [data, meta]
+      properties:
+        data: { $ref: '#/components/schemas/Credential' }
+        meta: { $ref: '#/components/schemas/Meta' }
+    CredentialCollection:
+      type: object
+      required: [data, meta]
+      properties:
+        data: { type: array, items: { $ref: '#/components/schemas/Credential' } }
+        meta: { $ref: '#/components/schemas/Meta' }
+    ErrorEnvelope:
+      type: object
+      required: [error, meta]
+      properties:
+        error:
+          type: object
+          required: [code, message, retryable]
+          properties:
+            code: { type: string }
+            message: { type: string }
+            details: { type: array, items: { type: object, additionalProperties: true } }
+            retryable: { type: boolean }
+        meta: { $ref: '#/components/schemas/Meta' }
+  responses:
+    Unauthorized:
+      description: Missing or invalid authentication.
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorEnvelope' }
+    Forbidden:
+      description: Authenticated but not authorized.
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorEnvelope' }
+    NotFound:
+      description: Resource missing or intentionally concealed across tenant boundary.
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorEnvelope' }
+    Conflict:
+      description: State or idempotency conflict.
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorEnvelope' }
+    ValidationError:
+      description: Semantic validation failure.
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorEnvelope' }
+    RateLimited:
+      description: Rate or quota limit exceeded; Retry-After may be present.
+      headers:
+        Retry-After:
+          schema: { type: integer }
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorEnvelope' }
