@@ -205,3 +205,19 @@ For each public operation, verify:
 3. Required persistence and constraints exist in the database design or an approved deferral.
 4. Error/status semantics match OpenAPI.
 5. Positive, negative, cross-tenant and retry/idempotency tests exist.
+
+
+## Production policy test coverage
+
+The policy specification introduces release-gate coverage beyond the original functional catalogue. Add or retain automated tests for:
+
+- **Retention/deletion:** class-specific expiry clocks, idempotent deletion jobs, partial downstream failures, legal holds, tombstone replay after backup restore, and non-resurrection.
+- **Uploads:** content-vs-extension mismatch, MIME spoofing, oversize file/message/workspace quotas, archive expansion limits, parser timeout, malware quarantine, and tenant-scoped download grants.
+- **Widget sessions:** expiry, idle timeout, hard lifetime, refresh authorization, revocation propagation, exact-origin validation, nonce replay, and session-to-conversation reauthorization.
+- **Rate limits/budgets:** cross-instance atomicity, per-IP/user/session/workspace dimensions, concurrent run ceilings, Retry-After, reservation idempotency, settlement, release on cancellation/failure, and no cross-tenant quota disclosure.
+- **Availability/operations:** SLO metric correctness, provider-vs-platform incident classification, alert ownership, deployment rollback, and no public SLA assertion without approved policy.
+- **Disaster recovery:** database/object restore, index rebuild, secret recovery, queue reconciliation, tombstone replay, tenant-isolation smoke tests, and measured RPO/RTO.
+- **Residency/provider processing:** approved provider allowlist, data minimization, provider-specific retention settings, disabled/restricted provider behavior, and prohibition of unapproved fallback.
+- **Billing/overages:** immutable usage events, deduplication, price-book versioning, BYOK attribution, hard-stop behavior, and audited temporary admin grants.
+
+No proposed numeric limit or retention value should be tested as an immutable business truth until approved. Tests should load policy fixtures and verify validation, precedence, atomic policy-version snapshots, and behavior at configured boundaries. The release checklist in the policy specification is the M7 exit gate.
