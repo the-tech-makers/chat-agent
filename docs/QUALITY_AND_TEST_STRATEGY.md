@@ -177,3 +177,31 @@ pnpm build
 ~~~
 
 If an individual package exposes a narrower test command, document it in that package's README. CI and local commands should use the same scripts.
+
+
+## 12. Expanded catalogue and contract validation
+
+The machine-readable catalogue at `tests/cases/catalog.json` contains 72 planned test cases. New coverage includes:
+- API idempotency, tenant concealment and error redaction.
+- Runtime terminal-state recovery and untrusted retrieval boundaries.
+- Model credential resolution, strict BYOK behavior and capability validation.
+- Widget session/origin enforcement and postMessage validation.
+- Knowledge ACL filtering, atomic re-ingestion and deletion.
+- Workspace permission matrix and final-owner safeguards.
+- Workspace offboarding, backup tombstone replay and restore drills.
+- Typed configuration validation and cross-document contract review.
+
+All entries remain `planned` until executable tests or a documented manual release check exist and evidence is recorded. Do not interpret a catalogue entry as a passing test.
+
+### OpenAPI validation gate
+
+The initial OpenAPI 3.1 file is `docs/openapi/openapi.yaml`. CI should validate its syntax and OpenAPI schema, lint operation IDs and path parameters, and run request/response contract tests against the API implementation. The OpenAPI file currently covers the core workspace, agent, widget session, identity exchange, chat, model catalogue and BYOK credential operations; remaining API catalogue route families must be added before their implementation is considered contract-complete.
+
+### Contract drift gate
+
+For each public operation, verify:
+1. Method/path and caller authentication match `API_SPECIFICATION.md`.
+2. Permission and tenant scope match identity/admin specifications.
+3. Required persistence and constraints exist in the database design or an approved deferral.
+4. Error/status semantics match OpenAPI.
+5. Positive, negative, cross-tenant and retry/idempotency tests exist.
