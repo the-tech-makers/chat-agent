@@ -52,6 +52,7 @@ The MVP is intended for cloud deployment. Actual compute, storage, scaling and d
 - [Product Scope & MVP](docs/PRODUCT_SCOPE.md)
 - [System Architecture](docs/ARCHITECTURE.md)
 - [Database Design](docs/DATABASE_DESIGN.md)
+- [Integration Architecture](docs/INTEGRATION_ARCHITECTURE.md)
 
 ## Credits
 Built by [The Tech Makers](https://github.com/the-tech-makers) and contributors.
