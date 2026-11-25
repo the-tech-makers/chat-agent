@@ -254,3 +254,30 @@ Stable test IDs above are planning identifiers; add corresponding cases to `test
 The catalogue now contains 72 planned cases. Added IDs: API-002–API-004, AGT-004–AGT-005, MOD-007–MOD-009, WID-002–WID-003, KNOW-003–KNOW-005, ADM-001–ADM-002, PRV-001–PRV-002, OPS-005, CFG-002 and AUD-001.
 
 These entries are planned test specifications, not implemented automated tests. The coding agent must add executable tests and attach run evidence as each milestone is completed.
+
+
+## 8. DOC-25 — Production policies and service-level specification
+
+Source: [Production Policies and Service-Level Specification](PRODUCTION_POLICIES_AND_SLOS.md). All values marked TBD or proposed remain unapproved until recorded in a policy decision/ADR.
+
+| Task ID | Priority | Task | Acceptance evidence | Test IDs |
+|---|---|---|---|---|
+| POL-001 | P0 before production | Implement per-data-class retention and deletion policy | Expiry worker, deletion status, tombstone replay and restore tests pass | PRIV-001, PRIV-002, PRIV-003 |
+| POL-002 | P0 before uploads | Enforce upload type/size/count/extraction/concurrency limits | Malicious, oversized, MIME mismatch and parser-abuse tests pass | KNOW-006, SEC-011 |
+| POL-003 | P0 before public widget | Enforce widget session expiry, refresh, origin binding and revocation | Expired/replayed/cross-origin tokens are rejected; reauthorization is required | WID-004, SEC-012 |
+| POL-004 | P0 before public beta | Enforce shared API limits, concurrency and usage reservations | Atomic limits, Retry-After, budget settlement and failure release are verified | API-008, MOD-009, OPS-003 |
+| POL-005 | P0 before SLA claims | Define service SLO/SLA and support model | Public claims match measured service and approved contract; otherwise preview notice is explicit | OPS-004 |
+| POL-006 | P0 before production | Approve backup retention, RPO/RTO and recovery procedures | Restore drill records achieved RPO/RTO and validates tombstones/tenant isolation | OPS-005, PRIV-004 |
+| POL-007 | P0 before production | Approve residency and transfer policy | Data-flow inventory covers storage, backups, telemetry, support and provider processing | PRIV-005 |
+| POL-008 | P0 before enabling provider | Complete provider due diligence and data policy approval | Provider has reviewed terms, DPA, retention/training settings and approved data classes | MOD-010, PRIV-006 |
+| POL-009 | P0 before paid launch | Define plans, entitlements, price book and usage metering | Immutable usage ledger and historical price versioning reconcile correctly | BILL-001, BILL-002 |
+| POL-010 | P0 before paid launch | Define overage, hard-stop and suspension behavior | Exhaustion blocks billable work without surprise spend; overrides are audited | BILL-003, MOD-011 |
+
+### Cross-document policy invariants
+
+- Proposed numeric values are not implementation constants. Resolve them through versioned, validated configuration.
+- Platform safety ceilings override plan and workspace settings; workspace owners may tighten but not weaken them.
+- A BYOK failure never triggers implicit platform billing or credential/provider substitution.
+- Backup restoration must replay deletion tombstones before tenant data is exposed.
+- A widget session expiring does not itself authorize continued access to a conversation.
+- Public SLA, residency, compliance, retention, and pricing claims require explicit approval and supporting evidence.
