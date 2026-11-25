@@ -504,3 +504,21 @@ Do not implement provider keys, live MCP execution, or customer private-data acc
 Use the [Requirements Traceability and Task Register](TRACEABILITY_AND_TASK_REGISTER.md) as the index mapping every scope/architecture document to implementation tasks, acceptance evidence and stable test IDs. Track live task status in the GitHub Project **Chat Agent — Delivery** using the defined workflow. The GitHub Project is the live status source; this roadmap and register define scope and dependencies.
 
 Use the [Quality Assurance and Automated Test Strategy](QUALITY_AND_TEST_STRATEGY.md) for test levels, CI gates, coverage policy, test data and milestone exit criteria. The machine-readable [test catalogue](../tests/cases/catalog.json) currently defines automatable acceptance/security scenarios. Implement tests incrementally with the milestone that owns each feature; the catalogue entries are planned until implemented and passing. A task is Done only after its required tests pass and evidence is linked.
+
+
+## 19. Detailed implementation contracts
+
+Before implementing a milestone, consult its detailed contract documents:
+
+- [API specification](API_SPECIFICATION.md) — routes, authentication classes, envelopes, streaming events and error semantics.
+- [Agent runtime specification](AGENT_RUNTIME_SPECIFICATION.md) — orchestration lifecycle, trust boundaries, limits, tools and recovery.
+- [Model gateway specification](MODEL_GATEWAY_SPECIFICATION.md) — adapters, credential resolution, route precedence, BYOK and usage.
+- [Widget and SDK specification](WIDGET_AND_SDK_SPECIFICATION.md) — iframe, identity bootstrap, postMessage protocol and SDK.
+- [Knowledge and retrieval specification](KNOWLEDGE_AND_RETRIEVAL_SPECIFICATION.md) — ingestion, chunking, ACL filtering, citations and deletion.
+- [Admin and workspace operations](ADMIN_AND_WORKSPACE_OPERATIONS.md) — roles, permissions, support access and lifecycle.
+- [Deployment and operations runbook](DEPLOYMENT_AND_OPERATIONS_RUNBOOK.md) — release, recovery, monitoring and incident response.
+- [Configuration reference](CONFIGURATION_REFERENCE.md) — validated runtime configuration and secret references.
+- [Data lifecycle and privacy](DATA_LIFECYCLE_AND_PRIVACY.md) — retention, export, deletion and offboarding.
+- [Architecture decision records](ARCHITECTURE_DECISIONS.md) and [glossary](GLOSSARY.md) — settled decisions and shared terminology.
+
+These documents are design contracts, not evidence that features have been implemented. If implementation discovers a necessary deviation, propose an ADR and update the affected contract, database design, task register and test catalogue together before merging the change.
