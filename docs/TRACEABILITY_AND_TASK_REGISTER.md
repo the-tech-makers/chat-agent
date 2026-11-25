@@ -238,3 +238,19 @@ The following documents refine the original scope and architecture. Their implem
 - M7: admin operations, privacy/offboarding, production runbooks and operational evidence.
 
 Stable test IDs above are planning identifiers; add corresponding cases to `tests/cases/catalog.json` before implementation begins. Do not mark these tasks Done until the contract and test evidence are implemented and reviewed.
+
+
+## 12. Contract audit and schema closure tasks
+
+| Document | Task ID | Priority | Required work | Acceptance evidence | Test IDs |
+|---|---|---:|---|---|---|
+| [Contract alignment audit](CONTRACT_ALIGNMENT_AUDIT.md) | AUD-001 | P0 | Resolve or explicitly defer every AUD-001–AUD-016 gap | Each gap has a schema/API/test implementation or approved deferral | AUD-001 |
+| [Database design addendum](DATABASE_DESIGN_ADDENDUM.md) | DB-007 | P0 | Add durable entities for sessions, approvals, idempotency, budgets, versions and deletion | Migrations, RLS, constraints and lifecycle tests cover all new entities | API-002, WID-002, KNOW-005, PRV-001 |
+| [OpenAPI 3.1 contract](openapi/openapi.yaml) | API-002 | P0 | Keep machine-readable route and schema contract synchronized with API prose | OpenAPI validation and contract tests pass; no undocumented breaking drift | API-002, API-003, API-004 |
+| [Expanded test catalogue](../tests/cases/catalog.json) | QA-002 | P0 | Implement new cases for runtime, gateway, widget, retrieval, admin and privacy | Every case has an automation/manual target and evidence before status changes from planned | AGT-004, MOD-008, WID-002, KNOW-003, PRV-001 |
+
+### New test catalogue coverage
+
+The catalogue now contains 72 planned cases. Added IDs: API-002–API-004, AGT-004–AGT-005, MOD-007–MOD-009, WID-002–WID-003, KNOW-003–KNOW-005, ADM-001–ADM-002, PRV-001–PRV-002, OPS-005, CFG-002 and AUD-001.
+
+These entries are planned test specifications, not implemented automated tests. The coding agent must add executable tests and attach run evidence as each milestone is completed.
