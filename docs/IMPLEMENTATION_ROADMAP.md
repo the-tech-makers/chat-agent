@@ -100,6 +100,16 @@ Acceptance criteria:
 - CI passes on a clean checkout.
 - Routine CI uses mocks and does not require live provider credentials.
 
+### M0 implementation issues
+
+- [#1 Initialize pnpm/Turborepo monorepo](https://github.com/the-tech-makers/chat-agent/issues/1)
+- [#2 Create web, widget and worker app shells](https://github.com/the-tech-makers/chat-agent/issues/2)
+- [#3 Add PostgreSQL and pgvector development environment](https://github.com/the-tech-makers/chat-agent/issues/3)
+- [#4 Add CI and deterministic test harness](https://github.com/the-tech-makers/chat-agent/issues/4)
+- [#5 Add health checks and local setup documentation](https://github.com/the-tech-makers/chat-agent/issues/5)
+
+These are open Backlog issues. Complete the foundation in dependency order: #1 first; #2, #3 and #4 can then proceed in parallel; #5 integrates the app and infrastructure readiness work.
+
 ## 6. M1 — Database and workspace identity
 
 ### M1.1 Database baseline
